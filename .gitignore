@@ -1,4 +1,5 @@
 dataset
 validation_data
 models
+images
 *.zip
