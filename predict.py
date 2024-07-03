@@ -11,9 +11,6 @@ if image_path.endswith("/"):
 else:
     images_path = [image_path]
 
-print("Images path:", images_path)
-print("Model path:", model_path)
-
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import load_img, img_to_array
@@ -36,10 +33,27 @@ model.summary()
 
 predictions = model.predict(img_array)
 
+ok, nok = 0, 0
+
+print()
+print("-"*100)
+print()
+
 for prediction, img_path in zip(predictions, images_path):
     score = tf.nn.softmax(prediction)
 
     category = np.argmax(score)
     dir_name = path.basename(path.dirname(img_path))
 
-    cprint(f"Model thinks {img_path} is {category} (in reality: {dir_name}) with {100*np.max(score)}% certainty", "green" if dir_name == str(category) else "red")
+    sorted_categories = sorted(list(range(10)), key=lambda x: score[x], reverse=True)
+    
+    if dir_name != str(category):
+        cprint(f"Model thinks {img_path} is {category} (in reality: {dir_name}) with {100*np.max(score)}% certainty", "red")
+        print("Order of preference:", sorted_categories)
+        print(score)
+        nok += 1
+    else:
+        ok += 1
+
+cprint(f"Model correctly classifies {ok}/{ok+nok} images ({100.*ok/(ok+nok)}%)", "green")
+cprint(f"Model incorrectly classifies {nok}/{ok+nok} images ({100.*nok/(ok+nok)}%)", "red")

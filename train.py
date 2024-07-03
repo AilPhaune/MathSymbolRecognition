@@ -3,6 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Rescaling, Input, RandomRotation, RandomZoom, Dropout, RandomCrop, RandomTranslation
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 import sys
 
@@ -83,7 +84,11 @@ model.summary()
 history = model.fit(
     train_ds,
     validation_data=val_ds,
-    epochs=epochs
+    epochs=epochs,
+    callbacks=[
+        EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1, restore_best_weights=True),
+        ReduceLROnPlateau(monitor='val_loss', factor=0.8, patience=5, verbose=1, min_lr=0.0001)
+    ],
 )
 
 # Save the model
