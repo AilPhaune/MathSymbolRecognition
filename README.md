@@ -2,7 +2,7 @@
 
 ## Training and predicting
 
-Train with `python train.py`
+Train with `python train.py <epochs>`. Default epochs is 50.
 
 Predict with `python <path_to_image / path_to_validation_directory> <path_to_model>`
 
