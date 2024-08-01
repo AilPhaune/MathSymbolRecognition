@@ -1,5 +1,7 @@
 dataset
 validation_data
-models
+models/*
 images
+jsmodels
 *.zip
+prediction_stats/*

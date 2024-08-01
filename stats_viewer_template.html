@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stats viewer</title>
+        <style>
+            body {
+                position: absolute;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+
+            table {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: max-content;
+                border-collapse: collapse;
+            }
+
+            thead th {
+                position: sticky;
+                top: -1px;
+                z-index: 1;
+            }
+
+            th, td {
+                padding: 8px 16px;
+            }
+
+            td:first-child {
+                position: sticky;
+                left: -1px;
+                z-index: 2;
+                background: orange;
+            }
+
+            th:first-child {
+                left: -1px;
+                z-index: 3;
+                background: black;
+            }
+
+            th {
+                background: #eee;
+                border: 1px solid black;
+                text-align: center;
+            }
+
+            td {
+                border: 1px solid black;
+                text-align: center;
+            }
+
+            tr:nth-child(even) {
+                background-color: lightgray;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <script>
+            const thead = document.querySelector('thead');
+            const tbody = document.querySelector('tbody');
+
+            function makeTable(json) {
+                thead.innerHTML = '';
+                tbody.innerHTML = '';
+
+                const theadtr = document.createElement('tr');
+                thead.appendChild(theadtr);
+
+                const colTitle = document.createElement('th');
+                theadtr.appendChild(colTitle);
+
+                for(const row in json) {
+                    const colTitle = document.createElement('th');
+                    colTitle.innerText = row;
+                    theadtr.appendChild(colTitle);
+
+                    const hrow = document.createElement('tr');
+                    
+                    const rowTitle = document.createElement('td');
+                    rowTitle.innerText = row;
+                    hrow.appendChild(rowTitle);
+                    
+                    for(const column in json[row]) {
+                        const hcol = document.createElement('td');
+                        hcol.innerText = json[row][column];
+                        hcol.title = `${json[row][column]} "${row}" ${json[row][column] == 1 ? 'was' : 'were'} predicted to be "${column}"`;
+                        if(row == column) {
+                            hcol.style.background = "#00FF00";
+                        }
+                        hrow.appendChild(hcol);
+                    }
+                    tbody.appendChild(hrow);
+                }
+            }
+
+            //
+        </script>
+    </body>
+</html>
