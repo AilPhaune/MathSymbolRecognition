@@ -70,7 +70,7 @@ model = Sequential([
 
     Conv2D(32, 5, padding='same', activation='relu'),
     MaxPooling2D(pool_size=(2, 2)),
-    Dropout(0.2),
+    Dropout(0.05),
 
     Conv2D(64, 3, padding='same', activation='relu'),
     MaxPooling2D(pool_size=(2, 2)),
@@ -81,8 +81,8 @@ model = Sequential([
     Dropout(0.3),
 
     Flatten(),
-    Dense(256, activation='leaky_relu'),
-    Dropout(0.15),
+    Dense(128, activation='leaky_relu'),
+    Dropout(0.1),
 
     Dense(len(class_names), activation='softmax')
 ])

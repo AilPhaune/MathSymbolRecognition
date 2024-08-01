@@ -115,7 +115,7 @@ if validation:
     cprint(f"Model classifies as the second choice {kok}/{ok+nok+kok} images ({100.*kok/(ok+nok+kok)}%)", "yellow")
     cprint(f"Model incorrectly classifies {nok}/{ok+nok+kok} images ({100.*nok/(ok+nok+kok)}%)", "red")
 
-now = datetime.datetime.now()
-with open(f'prediction_stats/predict_{now.strftime("%d-%m-%Y_%H-%M")}.html', "w") as f:
-    with open("stats_viewer_template.html", "r") as template:
-        f.write(template.read().replace('//', f'makeTable({json.dumps(prediction_stats)});'))
+    now = datetime.datetime.now()
+    with open(f'prediction_stats/predict_{now.strftime("%d-%m-%Y_%H-%M")}.html', "w") as f:
+        with open("stats_viewer_template.html", "r") as template:
+            f.write(template.read().replace('//', f'makeTable({json.dumps(prediction_stats)});'))

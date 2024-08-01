@@ -98,6 +98,8 @@
                         hcol.title = `${json[row][column]} "${row}" ${json[row][column] == 1 ? 'was' : 'were'} predicted to be "${column}"`;
                         if(row == column) {
                             hcol.style.background = "#00FF00";
+                        } else if(json[row][column] != 0) {
+                            hcol.style.background = "#FF0000";
                         }
                         hrow.appendChild(hcol);
                     }
